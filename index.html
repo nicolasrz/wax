@@ -1,0 +1,145 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily ! </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.1/css/bulma.min.css">
+ 
+
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="notification">
+                <div class="buttons">
+                    <audio controls loop id="audio" ref="audio">
+                        <source src="choose.mp3" type="audio/mpeg">
+                        </audio>
+                  </div>
+            </div>
+          </div>
+    
+          <div class="container" style="margin-top: 10%;">
+            <div class="box has-text-centered">
+                <div class="columns"  style="margin-top: 10%;">
+                <div class="column">
+                    <ul>
+                        <li v-for="person in persons">{{person}}</li>
+                    </ul>
+                    
+                </div>
+                    <div class="column">
+                        <button class="button is-primary" @click="choose()">Choose your character</button>
+                    </div>
+                </div>
+           
+    
+                <div class="columns"  style="margin-top: 10%;">
+                    <div class="column">
+                        <h2>{{choosen}}</h2>
+                    </div>
+                    <div class="column" id="timer" v-if="showtimer">
+                        <button class="button is-info" @click="start">start</button>
+                      Timer : {{timeleft}}
+                    </div>
+                  </div>
+                
+              </div>
+          </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+</body>
+
+<script>
+
+var app = new Vue({
+    el : "#app",
+    data: {
+        persons : [
+            'Gaetan',
+            'Nicolas',
+            'Luc',
+            'Anis',
+            'Sophie',
+            'Yoann',
+            'Damien',
+            // 'Christophe'
+        ],
+        choosen : '',
+        showtimer: false,
+        timeleft: 1
+    },
+    methods: {
+        choose : function(){
+            this.$refs.audio.play();
+            this.persons = this.shuffle(this.persons);
+        },
+        shuffle : function(arr){
+            for (let i=0; i<this.persons.length; i++) {
+                setTimeout( () => {
+                    this.choosen = this.persons[i];
+                    console.log(this.choosen);
+                    if(i == this.persons.length - 1){
+                        this.choosen = this.persons[i];
+                        this.persons.splice(i, 1);
+                        this.showtimer = true;
+                        this.timeleft = 1;
+                    }
+                },i*500);
+            }
+
+            return arr.sort(function (a, b) { return 0.5 - Math.random() })
+        },
+        start : function(){
+            this.$refs.audio.pause();
+            var timer = setInterval(() => {
+                    this.timeleft--;
+                    if(this.timeleft == 0){
+                        clearInterval(timer);
+                    }
+                },1000);
+        }
+    }
+})
+
+// var timerDiv = document.getElementById('timer');
+// var audio = document.getElementById('audio')
+// function choose(){
+//     audio.play();
+//     persons = shuffle(persons);
+    
+//     for (let i=0; i<persons.length; i++) {
+//     setTimeout( function timer(){
+//             document.getElementById("person").innerHTML = persons[i]; 
+            
+//             if(i == persons.length - 1){
+//                 persons = persons.splice(i,1);
+//                 console.log(persons);
+//                 timerDiv.style.visibility = "visible";
+//                 audio.pause();
+//                 var timeleft = 5;
+                
+
+//                 var downloadTimer = setInterval(function(){
+//                     timeleft--;
+//                     document.getElementById("countdowntimer").textContent = timeleft;
+//                     if(timeleft <= 0){
+//                         document.getElementById(persons[i]).remove();
+//                         clearInterval(downloadTimer);
+//                     }
+//                 },1000);
+
+
+//             }
+//         }, i*500 );
+        
+//     }
+
+// }
+
+
+
+    
+
+</script>
+</html>
