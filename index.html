@@ -59,7 +59,7 @@ var app = new Vue({
             'Gaetan',
             'Nicolas',
             'Luc',
-            'Anis',
+            // 'Anis',
             'Sophie',
             'Yoann',
             'Damien',
@@ -67,7 +67,7 @@ var app = new Vue({
         ],
         choosen : '',
         showtimer: false,
-        timeleft: 1
+        timeleft: 80
     },
     methods: {
         choose : function(){
@@ -83,7 +83,7 @@ var app = new Vue({
                         this.choosen = this.persons[i];
                         this.persons.splice(i, 1);
                         this.showtimer = true;
-                        this.timeleft = 1;
+                        this.timeleft = 80;
                     }
                 },i*500);
             }
